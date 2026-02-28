@@ -11,8 +11,6 @@ static constexpr int SD_CS   = 27;
 static constexpr int SD_SCK  = 13;
 static constexpr int SD_MISO = 32;
 static constexpr int SD_MOSI = 14;
-
-// Если SD начнёт глючить — поставь 4000000 или 1000000
 static constexpr uint32_t SD_SPI_HZ = 8000000;
 SPIClass spi(VSPI);
 
@@ -20,11 +18,11 @@ SPIClass spi(VSPI);
 static constexpr char ssid[] = "Habitacion 152";
 static constexpr char pass[] = "WhSVXCn4";
 
-// Server (ноут) — ВАЖНО: IP ноута в той же подсети что ESP
+// Server
 static const char* SERVER_HOST = "192.168.0.102";
 static constexpr uint16_t SERVER_PORT = 5000;
 
-// Таймауты
+// Timeouts
 static constexpr uint32_t WIFI_TIMEOUT_MS = 15000;
 static constexpr uint32_t HTTP_TIMEOUT_MS = 25000;
 
@@ -88,7 +86,7 @@ bool uploadFileRaw(const char* filePathOnSd) {
     return false;
   }
 
-  // noDelay AFTER connect (иначе были ошибки setSocketOption)
+  // noDelay AFTER connect
   client.setNoDelay(true);
 
   client.print("POST /upload/");
@@ -124,7 +122,7 @@ bool uploadFileRaw(const char* filePathOnSd) {
 
   f.close();
 
-  // Читаем статусную строку
+
   String statusLine;
   unsigned long t0 = millis();
   while (client.connected() && millis() - t0 < HTTP_TIMEOUT_MS) {
@@ -146,7 +144,7 @@ bool uploadFileRaw(const char* filePathOnSd) {
   return ok;
 }
 
-// 000001.jpg, 000002.jpg ... пока не найдём следующий
+// 000001.jpg, 000002.jpg ...
 bool uploadAllPhotosSequential() {
   int sent = 0;
 
