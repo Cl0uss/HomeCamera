@@ -24,7 +24,6 @@ def build(session_id: str) -> int:
         print(f"No frames in {session_frames}")
         return 2
 
-    # количество последовательных кадров от 000001.jpg
     i = 1
     while True:
         jpg = session_frames / f"{i:06d}.jpg"
@@ -37,7 +36,6 @@ def build(session_id: str) -> int:
         print("No sequential frames starting from 000001.jpg")
         return 3
 
-    # ffmpeg pattern (ждём .jpg)
     pattern = str(session_frames / "%06d.jpg")
 
     cmd = [
