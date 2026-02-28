@@ -60,8 +60,6 @@ def _end_current_session():
         _current_session_id = None
 
 def _is_first_frame(filename: str) -> bool:
-    # твоя логика: заканчивается на '01.jpg'
-    # Для 000001.jpg это True
     name = filename.lower()
     return name.endswith("01.jpg") or name.endswith("01.jpeg")
 
@@ -77,7 +75,6 @@ def upload_raw(name):
     if not data:
         return jsonify({"ok": False, "error": "empty body"}), 400
 
-    # Если пришёл первый кадр (000001.jpg) — ВСЕГДА новая сессия
     if _is_first_frame(filename):
         sid = _start_new_session()
     else:
@@ -105,7 +102,6 @@ def finalize():
 
     ok = (res1.returncode == 0) and (res2.returncode == 0)
 
-    # завершили сессию
     _end_current_session()
 
     return jsonify({
