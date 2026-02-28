@@ -1,0 +1,18 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# Virtual environment
+venv/
+server/venv/
+
+# Your folders
+server/__pycache__/
+server/clips/
+server/frames/
+
+# Environment variables
+server/telegramCredentials.env
+
+# (на всякий случай)
+.env
